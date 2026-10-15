@@ -39,9 +39,21 @@ export const SettingsPanel = ({
         }`}
       >
         <div className="w-[335px] flex flex-col h-full">
-          {/* Top Tabs with Collapse Slide Button */}
-          <div className="p-4 pb-3 border-b border-[#E2E8F0] flex items-center justify-between bg-white flex-shrink-0">
-            <div className="flex items-center gap-6">
+          {/* Top Header Row: Toggle on left, Tabs placed on right side */}
+          <div className="p-3.5 pb-2.5 border-b border-[#E2E8F0] flex items-center justify-between bg-white flex-shrink-0">
+            {/* Toggle Slide Close Button on left side */}
+            <button
+              type="button"
+              onClick={onToggleOpen}
+              className="p-1 rounded-lg text-slate-400 hover:text-[#0A2540] hover:bg-slate-100 transition-colors flex-shrink-0"
+              title="Collapse settings panel"
+              aria-label="Collapse settings panel"
+            >
+              <PanelRightClose size={17} />
+            </button>
+
+            {/* Tabs placed at right side */}
+            <div className="flex items-center gap-5 ml-auto">
               <button
                 type="button"
                 onClick={() => setActiveTab('layout')}
@@ -78,17 +90,6 @@ export const SettingsPanel = ({
                 Style
               </button>
             </div>
-
-            {/* Toggle Slide Close Button */}
-            <button
-              type="button"
-              onClick={onToggleOpen}
-              className="p-1 rounded-lg text-slate-400 hover:text-[#0A2540] hover:bg-slate-100 transition-colors"
-              title="Collapse settings panel"
-              aria-label="Collapse settings panel"
-            >
-              <PanelRightClose size={17} />
-            </button>
           </div>
 
           {/* Scrollable Customization Content */}
@@ -383,19 +384,17 @@ export const SettingsPanel = ({
         </div>
       </aside>
 
-      {/* Floating Toggle Button when closed */}
+      {/* Floating Horizontal Toggle Button when closed - placed at top level along right edge */}
       {!isOpen && (
         <button
           type="button"
           onClick={onToggleOpen}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-white border-l border-y border-[#E2E8F0] shadow-md py-3 px-2 rounded-l-xl flex flex-col items-center gap-2 text-[#0A2540] hover:text-[#138A63] hover:bg-slate-50 transition-all group"
+          className="fixed right-0 top-[82px] z-40 bg-white border-l border-y border-[#E2E8F0] shadow-md px-3.5 py-2 rounded-l-xl flex items-center gap-2 text-xs font-semibold text-[#0A2540] hover:text-[#138A63] hover:bg-slate-50 transition-all group"
           title="Open customization settings"
           aria-label="Open customization settings"
         >
-          <SlidersHorizontal size={16} className="text-[#138A63] group-hover:scale-110 transition-transform" />
-          <span className="text-[10px] font-bold tracking-wider [writing-mode:vertical-lr] rotate-180 uppercase text-slate-500 group-hover:text-[#138A63]">
-            Customize Settings
-          </span>
+          <SlidersHorizontal size={14} className="text-[#138A63] group-hover:scale-110 transition-transform" />
+          <span className="tracking-tight">Customize Settings</span>
         </button>
       )}
     </>

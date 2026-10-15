@@ -140,29 +140,12 @@ export const CreateVideo = ({
       {/* CENTER / MAIN WORKSPACE AREA */}
       <div className="flex-1 min-w-0 overflow-y-auto p-5 lg:p-6 space-y-4">
         
-        {/* Top Header Row for Main Area: Flexible Centered Stepper + Toggle Button */}
-        <div className="relative w-full flex items-center justify-center min-h-[44px] pb-1">
-          {/* Centered Stepper */}
-          <div className="w-full flex justify-center">
-            <WorkflowSteps
-              activeStep={activeWorkflowStep}
-              onStepClick={(step) => setActiveWorkflowStep(step)}
-            />
-          </div>
-
-          {/* Toggle Button when panel is closed: absolute right so it never displaces center stepper */}
-          {!isSettingsOpen && (
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden sm:block">
-              <button
-                type="button"
-                onClick={() => setIsSettingsOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#E2E8F0] hover:border-slate-300 rounded-lg text-xs font-semibold text-[#0A2540] shadow-2xs transition-all hover:bg-slate-50"
-              >
-                <SlidersHorizontal size={13} className="text-[#138A63]" />
-                <span>Customize Settings</span>
-              </button>
-            </div>
-          )}
+        {/* Top Header Row for Main Area: Flexible Centered Stepper */}
+        <div className="w-full flex items-center justify-center min-h-[44px] pb-1">
+          <WorkflowSteps
+            activeStep={activeWorkflowStep}
+            onStepClick={(step) => setActiveWorkflowStep(step)}
+          />
         </div>
 
         {/* Training Prompt Card */}
