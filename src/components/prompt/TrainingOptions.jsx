@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { Languages, Clock, Users, ShieldAlert, ChevronDown, Check } from 'lucide-react';
+import { Globe, Clock, Users, Target, ChevronDown, Check } from 'lucide-react';
 
 const iconMap = {
-  Languages,
+  Languages: Globe,
+  language: Globe,
+  Globe,
   Clock,
+  clock: Clock,
   Users,
-  ShieldAlert,
+  audience: Users,
+  Target,
+  type: Target,
+  ShieldAlert: Target
 };
 
 const optionPresets = {
@@ -29,7 +35,7 @@ export const TrainingOptions = ({ options = [], onOptionsChange }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 relative">
       {options.map((opt) => {
-        const Icon = iconMap[opt.icon] || ShieldAlert;
+        const Icon = iconMap[opt.id] || iconMap[opt.icon] || Globe;
         const isOpen = activeDropdown === opt.id;
         const presets = optionPresets[opt.id] || [];
 
@@ -38,26 +44,24 @@ export const TrainingOptions = ({ options = [], onOptionsChange }) => {
             <button
               type="button"
               onClick={() => setActiveDropdown(isOpen ? null : opt.id)}
-              className={`w-full flex items-center justify-between p-3 rounded-xl border text-left transition-all ${
+              className={`w-full flex items-center justify-between p-2.5 px-3 rounded-xl border text-left transition-all ${
                 isOpen 
-                  ? 'border-[#138A63] bg-[#E8F5F0]/40 shadow-xs' 
-                  : 'border-[#DCE5EA] bg-white hover:border-slate-300 hover:bg-slate-50/70'
+                  ? 'border-[#138A63] bg-[#E8F5F0]/30 shadow-2xs' 
+                  : 'border-[#E2E8F0] bg-white hover:border-slate-300'
               }`}
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-[#F5F8FA] flex items-center justify-center text-[#138A63] flex-shrink-0 border border-[#DCE5EA]">
-                  <Icon size={16} />
-                </div>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Icon size={16} className="text-slate-400 flex-shrink-0" />
                 <div className="min-w-0">
-                  <span className="block text-[11px] font-medium text-[#64748B] uppercase tracking-wider">
+                  <span className="block text-[10px] text-slate-400 font-medium">
                     {opt.label}
                   </span>
-                  <span className="block text-sm font-semibold text-[#092C49] truncate">
+                  <span className="block text-xs font-bold text-[#0A2540] truncate">
                     {opt.value}
                   </span>
                 </div>
               </div>
-              <ChevronDown size={14} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-180 text-[#138A63]' : ''}`} />
+              <ChevronDown size={14} className={`text-slate-400 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#138A63]' : ''}`} />
             </button>
 
             {/* Dropdown presets popover */}
@@ -67,7 +71,7 @@ export const TrainingOptions = ({ options = [], onOptionsChange }) => {
                   className="fixed inset-0 z-30" 
                   onClick={() => setActiveDropdown(null)} 
                 />
-                <div className="absolute top-full left-0 mt-1.5 w-full bg-white border border-[#DCE5EA] rounded-xl shadow-lg z-40 py-1.5 animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute top-full left-0 mt-1 w-full bg-white border border-[#E2E8F0] rounded-xl shadow-lg z-40 py-1.5 animate-in fade-in duration-100">
                   <div className="px-2.5 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                     Select {opt.label}
                   </div>
@@ -79,7 +83,7 @@ export const TrainingOptions = ({ options = [], onOptionsChange }) => {
                       className={`w-full flex items-center justify-between px-3 py-1.5 text-xs text-left transition-colors ${
                         opt.value === val 
                           ? 'bg-[#E8F5F0] text-[#138A63] font-semibold' 
-                          : 'text-[#092C49] hover:bg-slate-50'
+                          : 'text-[#0A2540] hover:bg-slate-50'
                       }`}
                     >
                       <span>{val}</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Clapperboard } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { SceneCard } from './SceneCard';
 
 export const ScenePanel = ({ 
@@ -12,22 +12,22 @@ export const ScenePanel = ({
   onRenameScene
 }) => {
   return (
-    <div className="bg-white rounded-xl border border-[#DCE5EA] p-4 shadow-xs flex flex-col h-full">
+    <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 shadow-2xs flex flex-col justify-between space-y-3">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
-        <div className="flex items-center gap-2">
-          <Clapperboard size={16} className="text-[#138A63]" />
-          <h3 className="text-sm font-bold text-[#092C49]">
-            Scenes ({scenes.length})
-          </h3>
+      <div className="flex items-center justify-between pb-1">
+        <h3 className="text-sm font-bold text-[#0A2540]">
+          Scenes ({scenes.length})
+        </h3>
+        {/* 6-dots grid handle icon */}
+        <div className="flex items-center gap-0.5 text-slate-300">
+          <div className="w-1 h-1 rounded-full bg-slate-400" />
+          <div className="w-1 h-1 rounded-full bg-slate-400" />
+          <div className="w-1 h-1 rounded-full bg-slate-400" />
         </div>
-        <span className="text-[11px] font-medium text-[#64748B]">
-          Timeline Order
-        </span>
       </div>
 
       {/* Scene list container */}
-      <div className="space-y-2.5 flex-1 overflow-y-auto pr-0.5 max-h-[460px]">
+      <div className="space-y-2 flex-1">
         {scenes.map((scene) => (
           <SceneCard
             key={scene.id}
@@ -41,13 +41,13 @@ export const ScenePanel = ({
         ))}
       </div>
 
-      {/* Add Scene Button */}
+      {/* Add Scene Button matching reference */}
       <button
         type="button"
         onClick={onAddScene}
-        className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 px-3 border border-dashed border-[#DCE5EA] hover:border-[#138A63] text-sm font-semibold text-[#092C49] hover:text-[#138A63] hover:bg-[#E8F5F0]/30 rounded-xl transition-all group"
+        className="w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#F1F5F9] hover:bg-slate-200/80 text-xs font-semibold text-[#138A63] rounded-xl transition-all"
       >
-        <Plus size={16} className="text-[#64748B] group-hover:text-[#138A63] transition-colors" />
+        <Plus size={14} className="stroke-[2.5]" />
         <span>Add Scene</span>
       </button>
     </div>

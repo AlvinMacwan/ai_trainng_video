@@ -12,50 +12,38 @@ export const Header = ({
   canRedo = false 
 }) => {
   return (
-    <header className="h-[72px] bg-white border-b border-[#DCE5EA] px-6 flex items-center justify-between sticky top-0 z-30 select-none shadow-xs">
+    <header className="h-[68px] bg-white border-b border-[#E2E8F0] px-7 flex items-center justify-between sticky top-0 z-30 select-none">
       {/* Left: Brand Identity */}
-      <div className="flex items-center gap-3.5">
-        <StudioLogo size={46} />
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-tight text-[#063B56]">
-              AI Training Studio
-            </h1>
-            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold bg-[#E8F5F0] text-[#138A63] rounded-full border border-[#138A63]/20">
-              <Sparkles size={11} />
-              Studio Beta
-            </span>
-          </div>
-          <p className="text-xs text-[#64748B] hidden md:block">
-            Intelligent enterprise video generation workspace
-          </p>
-        </div>
+      <div className="flex items-center gap-3">
+        <StudioLogo size={36} />
+        <h1 className="text-[19px] font-bold tracking-tight text-[#0A2540]">
+          AI Training Studio
+        </h1>
       </div>
 
-      {/* Right: History, Actions, Generate CTA */}
+      {/* Right: History, Save, Generate CTA */}
       <div className="flex items-center gap-3">
         {/* Undo / Redo */}
-        <div className="flex items-center border border-[#DCE5EA] rounded-lg p-0.5 bg-[#F8FAFC]">
+        <div className="flex items-center gap-1 mr-1">
           <button 
             type="button"
             onClick={onUndo}
             disabled={!canUndo}
-            title="Undo (Ctrl+Z)"
+            title="Undo"
             aria-label="Undo"
-            className={`p-2 rounded-md transition-colors ${canUndo ? 'text-[#092C49] hover:bg-white hover:shadow-xs' : 'text-slate-300 cursor-not-allowed'}`}
+            className={`p-1.5 rounded-md transition-colors ${canUndo ? 'text-[#0A2540] hover:bg-slate-100' : 'text-slate-300 cursor-not-allowed'}`}
           >
-            <Undo2 size={17} />
+            <Undo2 size={18} />
           </button>
-          <div className="w-[1px] h-4 bg-[#DCE5EA]" />
           <button 
             type="button"
             onClick={onRedo}
             disabled={!canRedo}
-            title="Redo (Ctrl+Y)"
+            title="Redo"
             aria-label="Redo"
-            className={`p-2 rounded-md transition-colors ${canRedo ? 'text-[#092C49] hover:bg-white hover:shadow-xs' : 'text-slate-300 cursor-not-allowed'}`}
+            className={`p-1.5 rounded-md transition-colors ${canRedo ? 'text-[#0A2540] hover:bg-slate-100' : 'text-slate-300 cursor-not-allowed'}`}
           >
-            <Redo2 size={17} />
+            <Redo2 size={18} />
           </button>
         </div>
 
@@ -64,30 +52,31 @@ export const Header = ({
           type="button"
           onClick={onSave}
           aria-label="Save Project"
-          className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-[#092C49] bg-white border border-[#DCE5EA] hover:bg-slate-50 hover:border-slate-300 rounded-lg transition-all shadow-xs active:scale-[0.98]"
+          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#0A2540] bg-white border border-[#DCE5EA] hover:bg-slate-50 rounded-lg transition-all shadow-2xs active:scale-[0.98]"
         >
           {isSaved ? (
             <>
-              <Check size={16} className="text-[#138A63]" />
-              <span className="text-[#138A63] font-semibold">Saved!</span>
+              <Check size={14} className="text-[#138A63]" />
+              <span className="text-[#138A63]">Saved</span>
             </>
           ) : (
             <>
-              <Bookmark size={16} className="text-[#64748B]" />
+              <Bookmark size={14} className="text-[#64748B]" />
               <span>Save Project</span>
             </>
           )}
         </button>
 
-        {/* Generate Video CTA (Visually dominant) */}
+        {/* Generate Video CTA (Green button with sparkles and arrow) */}
         <button
           type="button"
           onClick={onGenerate}
           aria-label="Generate Video"
-          className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-[#138A63] hover:bg-[#1B9B70] rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] border border-emerald-600/30"
+          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#138A63] hover:bg-[#107A57] rounded-lg shadow-sm transition-all active:scale-[0.98]"
         >
+          <Sparkles size={14} className="text-emerald-100" />
           <span>Generate Video</span>
-          <ArrowRight size={17} className="stroke-[2.5]" />
+          <ArrowRight size={14} className="stroke-[2.5]" />
         </button>
       </div>
     </header>

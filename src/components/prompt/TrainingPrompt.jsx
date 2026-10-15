@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, MessageSquareQuote, RefreshCw } from 'lucide-react';
+import { Sparkles, RefreshCw } from 'lucide-react';
 import { TrainingOptions } from './TrainingOptions';
 
 export const TrainingPrompt = ({ 
@@ -19,28 +19,16 @@ export const TrainingPrompt = ({
     }
     setTimeout(() => {
       setIsGenerating(false);
-    }, 900);
+    }, 700);
   };
 
   return (
-    <section className="bg-white rounded-xl border border-[#DCE5EA] p-5 shadow-xs space-y-4">
-      {/* Header / Title */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-[#E8F5F0] text-[#138A63]">
-            <MessageSquareQuote size={18} />
-          </div>
-          <h2 className="text-base font-bold text-[#092C49] tracking-tight">
-            Training Prompt
-          </h2>
-        </div>
-
-        <div className="text-xs font-medium text-[#64748B]">
-          <span className={prompt.length > charLimit ? 'text-red-500 font-bold' : ''}>
-            {prompt.length}
-          </span>
-          <span className="text-slate-400">/{charLimit}</span>
-        </div>
+    <section className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-2xs space-y-3.5">
+      {/* Title */}
+      <div>
+        <h2 className="text-[15px] font-bold text-[#0A2540] tracking-tight">
+          Training Prompt
+        </h2>
       </div>
 
       {/* Prompt Textarea */}
@@ -51,8 +39,13 @@ export const TrainingPrompt = ({
           rows={3}
           maxLength={charLimit}
           placeholder="Describe your training objective, audience, and key procedures..."
-          className="w-full text-sm leading-relaxed text-[#092C49] bg-[#F8FAFC]/60 border border-[#DCE5EA] rounded-xl p-3.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#138A63]/30 focus:border-[#138A63] transition-all resize-none shadow-2xs font-normal"
+          className="w-full text-xs leading-relaxed text-[#0A2540] bg-[#F8FAFC]/50 border border-[#E2E8F0] rounded-xl p-3 focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#138A63] focus:border-[#138A63] transition-all resize-none font-normal"
         />
+        {/* Character Count */}
+        <div className="text-[11px] text-slate-400 text-right -mt-1 mr-1">
+          <span>{prompt.length}</span>
+          <span>/{charLimit}</span>
+        </div>
       </div>
 
       {/* Options Cards */}
@@ -62,26 +55,21 @@ export const TrainingPrompt = ({
       />
 
       {/* Bottom Action Footer */}
-      <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-        <div className="text-xs text-[#64748B] flex items-center gap-1.5 hidden sm:flex">
-          <span className="w-2 h-2 rounded-full bg-[#138A63]" />
-          <span>Curated prompts generate verified workplace safety outlines</span>
-        </div>
-
+      <div className="flex justify-end pt-1">
         <button
           type="button"
           onClick={handleGenerateClick}
           disabled={isGenerating}
-          className="ml-auto flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#138A63] hover:bg-[#1B9B70] active:scale-[0.98] rounded-lg shadow-xs transition-all disabled:opacity-75"
+          className="flex items-center gap-2 px-5 py-2.5 text-xs font-semibold text-white bg-[#138A63] hover:bg-[#107A57] active:scale-[0.98] rounded-xl shadow-xs transition-all disabled:opacity-75"
         >
           {isGenerating ? (
             <>
-              <RefreshCw size={15} className="animate-spin" />
-              <span>Updating Plan...</span>
+              <RefreshCw size={14} className="animate-spin" />
+              <span>Generating...</span>
             </>
           ) : (
             <>
-              <Sparkles size={15} className="text-emerald-200" />
+              <Sparkles size={14} className="text-emerald-100" />
               <span>✦ Generate Training</span>
             </>
           )}

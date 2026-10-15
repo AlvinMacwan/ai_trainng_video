@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { SlidersHorizontal, LayoutGrid, Image as ImageIcon, Palette } from 'lucide-react';
-import { LayoutSettings } from './LayoutSettings';
-import { BackgroundSettings } from './BackgroundSettings';
-import { StyleSettings } from './StyleSettings';
+import { 
+  ChevronRight, 
+  ChevronDown, 
+  Settings as GearIcon, 
+  Check, 
+  Monitor,
+  User
+} from 'lucide-react';
+import { FactoryBackground, OfficeBackground, ClassroomBackground } from '../common/VisualAssets';
 
 export const SettingsPanel = ({
   settings = {},
   onUpdateSettings,
-  backgrounds = [],
-  styles = [],
-  colorThemes = [],
   isMobileDrawer = false,
   onCloseMobileDrawer
 }) => {
@@ -21,123 +23,351 @@ export const SettingsPanel = ({
     }
   };
 
+  const contentPosition = settings.contentPosition || 'left';
+  const activeBackground = settings.activeBackground || 'factory';
+  const slideStyle = settings.slideStyle || 'modern';
+  const colorTheme = settings.colorTheme || 'green';
+
   return (
-    <aside className="w-full lg:w-[340px] flex-shrink-0 bg-white rounded-xl border border-[#DCE5EA] p-5 shadow-xs space-y-5 h-fit select-none">
-      {/* Top Header & Tabs */}
-      <div>
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#E8F5F0] text-[#138A63] flex items-center justify-center">
-              <SlidersHorizontal size={15} />
-            </div>
-            <h3 className="text-sm font-bold text-[#092C49]">
-              Video Settings
-            </h3>
-          </div>
-
-          {isMobileDrawer && (
-            <button
-              type="button"
-              onClick={onCloseMobileDrawer}
-              className="text-xs text-slate-400 hover:text-[#092C49]"
-            >
-              Done
-            </button>
-          )}
-        </div>
-
-        {/* 3 Main Tabs: Layout, Background, Style */}
-        <div className="grid grid-cols-3 gap-1 p-1 bg-[#F5F8FA] rounded-xl border border-[#DCE5EA] mt-3">
+    <aside className="w-full lg:w-[325px] flex-shrink-0 bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-2xs space-y-5 select-none">
+      {/* Top 3 Text Tabs: Layout, Background, Style */}
+      <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+        <div className="flex items-center gap-7">
           <button
             type="button"
             onClick={() => setActiveTab('layout')}
-            className={`flex items-center justify-center gap-1.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
+            className={`pb-1 text-xs font-bold border-b-2 transition-all ${
               activeTab === 'layout'
-                ? 'bg-white text-[#138A63] shadow-xs border border-slate-200'
-                : 'text-slate-600 hover:text-[#092C49]'
+                ? 'border-[#138A63] text-[#138A63]'
+                : 'border-transparent text-slate-400 hover:text-[#0A2540]'
             }`}
           >
-            <LayoutGrid size={13} />
-            <span>Layout</span>
+            Layout
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('background')}
-            className={`flex items-center justify-center gap-1.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
+            className={`pb-1 text-xs font-medium border-b-2 transition-all ${
               activeTab === 'background'
-                ? 'bg-white text-[#138A63] shadow-xs border border-slate-200'
-                : 'text-slate-600 hover:text-[#092C49]'
+                ? 'border-[#138A63] text-[#138A63]'
+                : 'border-transparent text-slate-400 hover:text-[#0A2540]'
             }`}
           >
-            <ImageIcon size={13} />
-            <span>Background</span>
+            Background
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('style')}
-            className={`flex items-center justify-center gap-1.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
+            className={`pb-1 text-xs font-medium border-b-2 transition-all ${
               activeTab === 'style'
-                ? 'bg-white text-[#138A63] shadow-xs border border-slate-200'
-                : 'text-slate-600 hover:text-[#092C49]'
+                ? 'border-[#138A63] text-[#138A63]'
+                : 'border-transparent text-slate-400 hover:text-[#0A2540]'
             }`}
           >
-            <Palette size={13} />
-            <span>Style</span>
+            Style
+          </button>
+        </div>
+
+        {isMobileDrawer && (
+          <button
+            type="button"
+            onClick={onCloseMobileDrawer}
+            className="text-xs text-slate-400 hover:text-[#0A2540]"
+          >
+            Done
+          </button>
+        )}
+      </div>
+
+      {/* 1. Content Position Section */}
+      <div className="space-y-2">
+        <h4 className="text-xs font-bold text-[#0A2540]">
+          Content Position
+        </h4>
+
+        <div className="grid grid-cols-2 gap-2.5">
+          {/* Content Left */}
+          <button
+            type="button"
+            onClick={() => updateSetting('contentPosition', 'left')}
+            className={`flex flex-col p-2.5 rounded-xl border text-left transition-all ${
+              contentPosition === 'left'
+                ? 'border-2 border-[#138A63] bg-[#E8F5F0]/20'
+                : 'border-[#E2E8F0] bg-white hover:border-slate-300'
+            }`}
+          >
+            {/* Visual Box */}
+            <div className="w-full h-12 rounded-lg bg-slate-100 p-1 flex items-center justify-between gap-1 mb-2">
+              <div className="w-[58%] h-full rounded bg-[#2C3E50]" />
+              <div className="w-[38%] h-full rounded flex items-center justify-center text-slate-400">
+                <User size={13} />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-[#0A2540]">Content Left</span>
+              {contentPosition === 'left' && <Check size={12} className="text-[#138A63]" />}
+            </div>
+          </button>
+
+          {/* Content Right */}
+          <button
+            type="button"
+            onClick={() => updateSetting('contentPosition', 'right')}
+            className={`flex flex-col p-2.5 rounded-xl border text-left transition-all ${
+              contentPosition === 'right'
+                ? 'border-2 border-[#138A63] bg-[#E8F5F0]/20'
+                : 'border-[#E2E8F0] bg-white hover:border-slate-300'
+            }`}
+          >
+            {/* Visual Box */}
+            <div className="w-full h-12 rounded-lg bg-slate-100 p-1 flex items-center justify-between gap-1 mb-2">
+              <div className="w-[38%] h-full rounded flex items-center justify-center text-slate-400">
+                <User size={13} />
+              </div>
+              <div className="w-[58%] h-full rounded bg-[#2C3E50]" />
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-[#0A2540]">Content Right</span>
+              {contentPosition === 'right' && <Check size={12} className="text-[#138A63]" />}
+            </div>
           </button>
         </div>
       </div>
 
-      {/* Tab Specific Content */}
-      <div className="space-y-5">
-        {activeTab === 'layout' && (
-          <>
-            <LayoutSettings
-              contentPosition={settings.contentPosition}
-              onChangePosition={(pos) => updateSetting('contentPosition', pos)}
-            />
-            {/* Aspect ratio & advanced options accessible here too */}
-            <div className="pt-2 border-t border-slate-100">
-              <StyleSettings
-                styles={styles}
-                activeStyle={settings.slideStyle}
-                onChangeStyle={(st) => updateSetting('slideStyle', st)}
-                colorThemes={colorThemes}
-                activeColorTheme={settings.colorTheme}
-                onChangeColorTheme={(ct) => updateSetting('colorTheme', ct)}
-                aspectRatio={settings.aspectRatio}
-                onChangeAspectRatio={(ar) => updateSetting('aspectRatio', ar)}
-              />
-            </div>
-          </>
-        )}
+      {/* 2. Background Section */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h4 className="text-xs font-bold text-[#0A2540]">
+            Background
+          </h4>
+          <button 
+            type="button" 
+            onClick={() => alert('All studio environments unlocked.')}
+            className="text-[11px] font-semibold text-[#138A63] hover:underline"
+          >
+            View All
+          </button>
+        </div>
 
-        {activeTab === 'background' && (
-          <div className="space-y-4">
-            <BackgroundSettings
-              backgrounds={backgrounds}
-              activeBackground={settings.activeBackground}
-              onChangeBackground={(bgId) => updateSetting('activeBackground', bgId)}
-            />
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-500 leading-relaxed">
-              Environment backgrounds dynamically cast lighting onto presenter placeholders and presentation card borders.
+        <div className="grid grid-cols-3 gap-2">
+          {/* Factory */}
+          <button
+            type="button"
+            onClick={() => updateSetting('activeBackground', 'factory')}
+            className="flex flex-col text-center group"
+          >
+            <div className={`w-full h-14 rounded-xl overflow-hidden relative border transition-all ${
+              activeBackground === 'factory' ? 'border-2 border-[#138A63]' : 'border-[#E2E8F0]'
+            }`}>
+              <FactoryBackground />
+              {activeBackground === 'factory' && (
+                <div className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-[#138A63] text-white flex items-center justify-center">
+                  <Check size={9} strokeWidth={3} />
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] font-medium text-slate-600 mt-1">Factory</span>
+          </button>
+
+          {/* Office */}
+          <button
+            type="button"
+            onClick={() => updateSetting('activeBackground', 'office')}
+            className="flex flex-col text-center group"
+          >
+            <div className={`w-full h-14 rounded-xl overflow-hidden relative border transition-all ${
+              activeBackground === 'office' ? 'border-2 border-[#138A63]' : 'border-[#E2E8F0]'
+            }`}>
+              <OfficeBackground />
+              {activeBackground === 'office' && (
+                <div className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-[#138A63] text-white flex items-center justify-center">
+                  <Check size={9} strokeWidth={3} />
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] font-medium text-slate-600 mt-1">Office</span>
+          </button>
+
+          {/* Classroom */}
+          <button
+            type="button"
+            onClick={() => updateSetting('activeBackground', 'classroom')}
+            className="flex flex-col text-center group"
+          >
+            <div className={`w-full h-14 rounded-xl overflow-hidden relative border transition-all ${
+              activeBackground === 'classroom' ? 'border-2 border-[#138A63]' : 'border-[#E2E8F0]'
+            }`}>
+              <ClassroomBackground />
+              {activeBackground === 'classroom' && (
+                <div className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-[#138A63] text-white flex items-center justify-center">
+                  <Check size={9} strokeWidth={3} />
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] font-medium text-slate-600 mt-1">Classroom</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 3. Slide Style Section */}
+      <div className="space-y-2">
+        <h4 className="text-xs font-bold text-[#0A2540]">
+          Slide Style
+        </h4>
+
+        <div className="grid grid-cols-3 gap-2">
+          {/* Modern */}
+          <button
+            type="button"
+            onClick={() => updateSetting('slideStyle', 'modern')}
+            className="flex flex-col text-center group"
+          >
+            <div className={`w-full h-12 rounded-xl p-1 relative flex flex-col justify-center border transition-all bg-[#0B2A3A] overflow-hidden ${
+              slideStyle === 'modern' ? 'border-2 border-[#138A63]' : 'border-[#E2E8F0]'
+            }`}>
+              <div className="bg-white/90 rounded p-1 flex items-center gap-1">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#138A63]" />
+                <div className="w-5 h-1 bg-slate-400 rounded-full" />
+              </div>
+              {slideStyle === 'modern' && (
+                <div className="absolute top-1 right-1 w-3 h-3 rounded-full bg-[#138A63] text-white flex items-center justify-center">
+                  <Check size={8} strokeWidth={3} />
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] font-medium text-slate-600 mt-1">Modern</span>
+          </button>
+
+          {/* Minimal */}
+          <button
+            type="button"
+            onClick={() => updateSetting('slideStyle', 'minimal')}
+            className="flex flex-col text-center group"
+          >
+            <div className={`w-full h-12 rounded-xl p-1 relative flex flex-col justify-center border transition-all bg-slate-100 overflow-hidden ${
+              slideStyle === 'minimal' ? 'border-2 border-[#138A63]' : 'border-[#E2E8F0]'
+            }`}>
+              <div className="bg-white rounded border border-slate-300 p-1 flex items-center gap-1">
+                <div className="w-4 h-1 bg-slate-800 rounded-full" />
+              </div>
+              {slideStyle === 'minimal' && (
+                <div className="absolute top-1 right-1 w-3 h-3 rounded-full bg-[#138A63] text-white flex items-center justify-center">
+                  <Check size={8} strokeWidth={3} />
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] font-medium text-slate-600 mt-1">Minimal</span>
+          </button>
+
+          {/* Corporate */}
+          <button
+            type="button"
+            onClick={() => updateSetting('slideStyle', 'corporate')}
+            className="flex flex-col text-center group"
+          >
+            <div className={`w-full h-12 rounded-xl p-1 relative flex flex-col justify-center border transition-all bg-[#1E3A4C] overflow-hidden ${
+              slideStyle === 'corporate' ? 'border-2 border-[#138A63]' : 'border-[#E2E8F0]'
+            }`}>
+              <div className="bg-[#112433] border-t-2 border-t-[#138A63] rounded p-1 flex items-center gap-1">
+                <div className="w-4 h-1 bg-white/60 rounded-full" />
+              </div>
+              {slideStyle === 'corporate' && (
+                <div className="absolute top-1 right-1 w-3 h-3 rounded-full bg-[#138A63] text-white flex items-center justify-center">
+                  <Check size={8} strokeWidth={3} />
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] font-medium text-slate-600 mt-1">Corporate</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 4. Color Theme Section */}
+      <div className="space-y-2">
+        <h4 className="text-xs font-bold text-[#0A2540]">
+          Color Theme
+        </h4>
+
+        <div className="flex items-center gap-3">
+          {/* Navy Swatch */}
+          <button
+            type="button"
+            onClick={() => updateSetting('colorTheme', 'navy')}
+            className="relative"
+            title="Navy Theme"
+          >
+            <div className={`w-6 h-6 rounded-full bg-[#0B253A] transition-all ${
+              colorTheme === 'navy' ? 'ring-2 ring-offset-2 ring-[#0B253A]' : ''
+            }`} />
+          </button>
+
+          {/* Green Swatch (Selected in reference with double ring) */}
+          <button
+            type="button"
+            onClick={() => updateSetting('colorTheme', 'green')}
+            className="relative"
+            title="Green Theme"
+          >
+            <div className={`w-6 h-6 rounded-full bg-[#138A63] transition-all flex items-center justify-center ${
+              colorTheme === 'green' ? 'ring-2 ring-offset-2 ring-[#138A63]' : ''
+            }`}>
+              {colorTheme === 'green' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+            </div>
+          </button>
+
+          {/* Light / Mint Swatch */}
+          <button
+            type="button"
+            onClick={() => updateSetting('colorTheme', 'light')}
+            className="relative"
+            title="Light Theme"
+          >
+            <div className={`w-6 h-6 rounded-full bg-[#D4E7DE] transition-all ${
+              colorTheme === 'light' ? 'ring-2 ring-offset-2 ring-[#D4E7DE]' : ''
+            }`} />
+          </button>
+        </div>
+      </div>
+
+      {/* 5. Aspect Ratio Section */}
+      <div className="space-y-2">
+        <h4 className="text-xs font-bold text-[#0A2540]">
+          Aspect Ratio
+        </h4>
+
+        <div className="flex items-center justify-between p-2.5 px-3 rounded-xl border border-[#E2E8F0] bg-white">
+          <div className="flex items-center gap-2.5">
+            <Monitor size={16} className="text-slate-400" />
+            <div>
+              <span className="block text-xs font-bold text-[#0A2540]">
+                16:9
+              </span>
+              <span className="block text-[10px] text-slate-400">
+                (YouTube / Presentations)
+              </span>
             </div>
           </div>
-        )}
+          <ChevronDown size={14} className="text-slate-400" />
+        </div>
+      </div>
 
-        {activeTab === 'style' && (
-          <StyleSettings
-            styles={styles}
-            activeStyle={settings.slideStyle}
-            onChangeStyle={(st) => updateSetting('slideStyle', st)}
-            colorThemes={colorThemes}
-            activeColorTheme={settings.colorTheme}
-            onChangeColorTheme={(ct) => updateSetting('colorTheme', ct)}
-            aspectRatio={settings.aspectRatio}
-            onChangeAspectRatio={(ar) => updateSetting('aspectRatio', ar)}
-          />
-        )}
+      {/* 6. Advanced Options Section */}
+      <div className="pt-1">
+        <button
+          type="button"
+          onClick={() => alert('Advanced settings: Resolution 1080p, Auto-audio leveling enabled.')}
+          className="w-full flex items-center justify-between p-2.5 px-3 rounded-xl border border-[#E2E8F0] bg-white hover:bg-slate-50 text-left transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <GearIcon size={14} className="text-slate-500" />
+            <span className="text-xs font-semibold text-[#0A2540]">
+              Advanced Options
+            </span>
+          </div>
+          <ChevronRight size={14} className="text-slate-400" />
+        </button>
       </div>
     </aside>
   );

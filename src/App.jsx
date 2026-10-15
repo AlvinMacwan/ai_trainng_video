@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { CreateVideo } from './pages/CreateVideo';
@@ -9,7 +9,6 @@ import { Check, Menu } from 'lucide-react';
 const LOCAL_STORAGE_KEY = 'ai_training_studio_project_v1';
 
 export function App() {
-  // Load from localStorage or initialMockProject
   const [project, setProject] = useState(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -20,18 +19,15 @@ export function App() {
     return initialMockProject;
   });
 
-  // History stack for Undo / Redo
   const [history, setHistory] = useState([initialMockProject]);
   const [historyIndex, setHistoryIndex] = useState(0);
 
-  // UI state
-  const [currentView, setCurrentView] = useState('create'); // 'create' | 'projects' | 'templates' | etc.
+  const [currentView, setCurrentView] = useState('create');
   const [isSaved, setIsSaved] = useState(false);
   const [saveToast, setSaveToast] = useState(false);
   const [showGenerateModal, setShowGenerateModal] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Update project with undo history recording
   const handleUpdateProject = (newProject, recordHistory = true) => {
     setProject(newProject);
     setIsSaved(false);
@@ -39,7 +35,6 @@ export function App() {
     if (recordHistory) {
       const newHistory = history.slice(0, historyIndex + 1);
       newHistory.push(newProject);
-      // Limit history to 20 steps
       if (newHistory.length > 20) newHistory.shift();
       setHistory(newHistory);
       setHistoryIndex(newHistory.length - 1);
@@ -62,7 +57,6 @@ export function App() {
     }
   };
 
-  // Save Project action
   const handleSaveProject = () => {
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(project));
@@ -77,7 +71,6 @@ export function App() {
     }
   };
 
-  // View navigation
   const handleNavigate = (viewId) => {
     if (viewId === 'create' || viewId === 'projects') {
       setCurrentView(viewId);
@@ -87,7 +80,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F8FA] flex flex-col antialiased text-[#092C49]">
+    <div className="min-h-screen bg-[#F8F9FA] flex flex-col antialiased text-[#0A2540]">
       {/* Top Header */}
       <Header
         onSave={handleSaveProject}
@@ -100,20 +93,20 @@ export function App() {
       />
 
       {/* Main Workspace Frame */}
-      <div className="flex-1 flex max-w-[1680px] w-full mx-auto relative">
+      <div className="flex-1 flex w-full mx-auto relative">
         {/* Mobile Sidebar Hamburger Bar */}
         <div className="lg:hidden absolute top-2 left-4 z-20">
           <button
             type="button"
             onClick={() => setIsMobileSidebarOpen(true)}
-            className="p-2 bg-white rounded-lg border border-[#DCE5EA] text-[#092C49] shadow-xs"
+            className="p-2 bg-white rounded-lg border border-[#E2E8F0] text-[#0A2540] shadow-xs"
             aria-label="Open Sidebar Menu"
           >
             <Menu size={18} />
           </button>
         </div>
 
-        {/* Left Vertical Dark Navy Sidebar (230px) */}
+        {/* Left Vertical Dark Navy Sidebar (215px) */}
         <Sidebar
           currentView={currentView}
           onNavigate={handleNavigate}
@@ -122,7 +115,7 @@ export function App() {
         />
 
         {/* Central / Main Content Area */}
-        <main className="flex-1 min-w-0 flex flex-col">
+        <main className="flex-1 min-w-0 flex flex-col pr-4 py-1">
           {currentView === 'create' && (
             <CreateVideo
               project={project}
@@ -136,7 +129,7 @@ export function App() {
 
           {currentView === 'projects' && (
             <MyProjects
-              onOpenProject={(proj) => {
+              onOpenProject={() => {
                 setCurrentView('create');
               }}
               onNewProject={() => {
