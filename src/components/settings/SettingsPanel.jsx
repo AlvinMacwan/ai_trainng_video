@@ -384,17 +384,17 @@ export const SettingsPanel = ({
         </div>
       </aside>
 
-      {/* Floating Horizontal Toggle Button when closed - placed at top level along right edge */}
+      {/* Floating Horizontal Toggle Button when closed - Navy theme background with bold white text */}
       {!isOpen && (
         <button
           type="button"
           onClick={onToggleOpen}
-          className="fixed right-0 top-[82px] z-40 bg-white border-l border-y border-[#E2E8F0] shadow-md px-3.5 py-2 rounded-l-xl flex items-center gap-2 text-xs font-semibold text-[#0A2540] hover:text-[#138A63] hover:bg-slate-50 transition-all group"
+          className="fixed right-0 top-[82px] z-40 bg-[#022D44] hover:bg-[#063B56] border-l border-y border-[#063B56] shadow-lg px-4 py-2.5 rounded-l-xl flex items-center gap-2 text-xs font-bold text-white transition-all group"
           title="Open customization settings"
           aria-label="Open customization settings"
         >
-          <SlidersHorizontal size={14} className="text-[#138A63] group-hover:scale-110 transition-transform" />
-          <span className="tracking-tight">Customize Settings</span>
+          <SlidersHorizontal size={14} className="text-[#1B9B70] group-hover:scale-110 transition-transform" />
+          <span className="tracking-tight text-white font-bold">Customize Settings</span>
         </button>
       )}
     </>
