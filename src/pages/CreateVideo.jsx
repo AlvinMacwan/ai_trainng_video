@@ -5,20 +5,18 @@ import { ScenePanel } from '../components/scenes/ScenePanel';
 import { VideoPreview } from '../components/preview/VideoPreview';
 import { ScriptPanel } from '../components/script/ScriptPanel';
 import { SettingsPanel } from '../components/settings/SettingsPanel';
-import { SlidersHorizontal, Sparkles, CheckCircle2, X, Download, Play, RefreshCw } from 'lucide-react';
+import { Sparkles, CheckCircle2, X, Download, Play, RefreshCw, SlidersHorizontal } from 'lucide-react';
 
 export const CreateVideo = ({
   project,
   onUpdateProject,
-  onSaveProject,
-  isSaved,
   showGenerateModal,
   setShowGenerateModal
 }) => {
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(1);
   const [generationStep, setGenerationStep] = useState(1);
   const [isGeneratingCompleted, setIsGeneratingCompleted] = useState(false);
-  const [isMobileSettingsOpen, setIsMobileSettingsOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(true);
 
   // Active scene lookup
   const activeScene = project.scenes.find(s => s.id === project.activeSceneId) || project.scenes[0];
@@ -138,86 +136,80 @@ export const CreateVideo = ({
   };
 
   return (
-    <div className="flex-1 min-w-0 p-4 lg:p-5 space-y-4">
-      {/* 1. Workflow Steps Indicator (sitting directly on background) */}
-      <WorkflowSteps
-        activeStep={activeWorkflowStep}
-        onStepClick={(step) => setActiveWorkflowStep(step)}
-      />
-
-      {/* Main Workspace: Center Workspace + Right Settings Panel */}
-      <div className="flex flex-col lg:flex-row gap-5 items-start">
+    <div className="flex-1 flex h-[calc(100vh-68px)] overflow-hidden relative">
+      {/* CENTER / MAIN WORKSPACE AREA */}
+      <div className="flex-1 min-w-0 overflow-y-auto p-5 lg:p-6 space-y-4">
         
-        {/* LEFT / CENTER: Main Editor Area */}
-        <div className="flex-1 min-w-0 space-y-4 w-full">
-          
-          {/* Training Prompt Card */}
-          <TrainingPrompt
-            prompt={project.prompt}
-            onPromptChange={handlePromptChange}
-            options={project.options}
-            onOptionsChange={handleOptionsChange}
-            onGenerateTraining={() => {
-              setActiveWorkflowStep(2);
-            }}
+        {/* Top Header Row for Main Area: Left-aligned Stepper + quick toggle button */}
+        <div className="flex items-center justify-between">
+          <WorkflowSteps
+            activeStep={activeWorkflowStep}
+            onStepClick={(step) => setActiveWorkflowStep(step)}
           />
 
-          {/* Two-Column Section: Scenes List (Left) + Video Preview & Script (Right) */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
-            
-            {/* Left: Scenes List (Approx 28% width ~ 3.5 cols) */}
-            <div className="md:col-span-4 lg:col-span-4 xl:col-span-4">
-              <ScenePanel
-                scenes={project.scenes}
-                activeSceneId={project.activeSceneId}
-                onSelectScene={handleSelectScene}
-                onAddScene={handleAddScene}
-                onDuplicateScene={handleDuplicateScene}
-                onDeleteScene={handleDeleteScene}
-                onRenameScene={handleRenameScene}
-              />
-            </div>
+          {!isSettingsOpen && (
+            <button
+              type="button"
+              onClick={() => setIsSettingsOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#E2E8F0] hover:border-slate-300 rounded-lg text-xs font-semibold text-[#0A2540] shadow-2xs transition-colors"
+            >
+              <SlidersHorizontal size={13} className="text-[#138A63]" />
+              <span>Customize Settings</span>
+            </button>
+          )}
+        </div>
 
-            {/* Right: Video Preview + Script Panel (Approx 72% width ~ 8.5 cols) */}
-            <div className="md:col-span-8 lg:col-span-8 xl:col-span-8 space-y-3.5">
-              <VideoPreview
-                activeScene={activeScene}
-                settings={project.settings}
-                themeColors={activeTheme}
-              />
+        {/* Training Prompt Card */}
+        <TrainingPrompt
+          prompt={project.prompt}
+          onPromptChange={handlePromptChange}
+          options={project.options}
+          onOptionsChange={handleOptionsChange}
+          onGenerateTraining={() => {
+            setActiveWorkflowStep(2);
+          }}
+        />
 
-              <ScriptPanel
-                script={activeScene?.script}
-                onUpdateScript={handleUpdateScript}
-              />
-            </div>
+        {/* Two-Column Section: Scenes List (Left) + Video Preview & Script (Right) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+          
+          {/* Left: Scenes List (Approx 28% width ~ 4 cols) */}
+          <div className="md:col-span-4 lg:col-span-4 xl:col-span-4">
+            <ScenePanel
+              scenes={project.scenes}
+              activeSceneId={project.activeSceneId}
+              onSelectScene={handleSelectScene}
+              onAddScene={handleAddScene}
+              onDuplicateScene={handleDuplicateScene}
+              onDeleteScene={handleDeleteScene}
+              onRenameScene={handleRenameScene}
+            />
           </div>
 
-        </div>
+          {/* Right: Video Preview + Script Panel (Approx 72% width ~ 8 cols) */}
+          <div className="md:col-span-8 lg:col-span-8 xl:col-span-8 space-y-3.5">
+            <VideoPreview
+              activeScene={activeScene}
+              settings={project.settings}
+              themeColors={activeTheme}
+            />
 
-        {/* Mobile Settings Toggle Button */}
-        <div className="lg:hidden w-full flex justify-end">
-          <button
-            type="button"
-            onClick={() => setIsMobileSettingsOpen(!isMobileSettingsOpen)}
-            className="flex items-center gap-2 px-3.5 py-2 bg-white border border-[#E2E8F0] rounded-xl text-xs font-bold text-[#0A2540] shadow-2xs"
-          >
-            <SlidersHorizontal size={14} className="text-[#138A63]" />
-            <span>Customize Settings</span>
-          </button>
-        </div>
-
-        {/* RIGHT: Settings Panel (325px width) */}
-        <div className={`w-full lg:w-[325px] flex-shrink-0 ${isMobileSettingsOpen ? 'block' : 'hidden lg:block'}`}>
-          <SettingsPanel
-            settings={project.settings}
-            onUpdateSettings={handleUpdateSettings}
-            isMobileDrawer={isMobileSettingsOpen}
-            onCloseMobileDrawer={() => setIsMobileSettingsOpen(false)}
-          />
+            <ScriptPanel
+              script={activeScene?.script}
+              onUpdateScript={handleUpdateScript}
+            />
+          </div>
         </div>
 
       </div>
+
+      {/* RIGHT: Customization Setting Panel (Vertically Filled with Slide Toggle) */}
+      <SettingsPanel
+        settings={project.settings}
+        onUpdateSettings={handleUpdateSettings}
+        isOpen={isSettingsOpen}
+        onToggleOpen={() => setIsSettingsOpen(!isSettingsOpen)}
+      />
 
       {/* Generation Simulation Modal */}
       {showGenerateModal && (
@@ -326,7 +318,6 @@ export const CreateVideo = ({
           </div>
         </div>
       )}
-
     </div>
   );
 };

@@ -34,14 +34,14 @@ export const Sidebar = ({
         />
       )}
 
-      {/* Sidebar Container */}
+      {/* Sidebar Container - sticks flush to the edge with no margins */}
       <aside 
-        className={`fixed lg:static top-0 bottom-0 left-0 z-50 w-[215px] flex-shrink-0 bg-[#022D44] text-white flex flex-col justify-between p-3.5 my-3.5 ml-4 rounded-3xl shadow-lg relative overflow-hidden transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-[220px] flex-shrink-0 bg-[#022D44] text-white flex flex-col justify-between p-4 h-[calc(100vh-68px)] border-r border-[#063B56]/50 relative overflow-hidden transition-transform duration-300 ease-in-out ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        {/* Background Emerald Wave Decoration at Bottom */}
-        <div className="absolute -bottom-10 -left-10 -right-10 h-44 bg-gradient-to-tr from-[#138A63]/35 to-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+        {/* Background Emerald Wave Glow at Bottom */}
+        <div className="absolute -bottom-10 -left-10 -right-10 h-48 bg-gradient-to-tr from-[#138A63]/30 to-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
         {/* Navigation list */}
         <div className="space-y-4 relative z-10">
@@ -56,7 +56,7 @@ export const Sidebar = ({
             </button>
           </div>
 
-          <nav className="space-y-1" aria-label="Sidebar Navigation">
+          <nav className="space-y-1.5" aria-label="Sidebar Navigation">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentView === item.id;

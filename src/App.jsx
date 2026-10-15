@@ -80,7 +80,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] flex flex-col antialiased text-[#0A2540]">
+    <div className="h-screen w-screen overflow-hidden bg-[#F8F9FA] flex flex-col antialiased text-[#0A2540]">
       {/* Top Header */}
       <Header
         onSave={handleSaveProject}
@@ -92,8 +92,8 @@ export function App() {
         canRedo={historyIndex < history.length - 1}
       />
 
-      {/* Main Workspace Frame */}
-      <div className="flex-1 flex w-full mx-auto relative">
+      {/* Main Full-Height Studio Frame: sidebar - main - customization setting panel */}
+      <div className="flex-1 flex h-[calc(100vh-68px)] w-full overflow-hidden relative">
         {/* Mobile Sidebar Hamburger Bar */}
         <div className="lg:hidden absolute top-2 left-4 z-20">
           <button
@@ -106,7 +106,7 @@ export function App() {
           </button>
         </div>
 
-        {/* Left Vertical Dark Navy Sidebar (215px) */}
+        {/* 1. Left Vertical Dark Navy Sidebar (Sticking flush to edge, 0 white margins) */}
         <Sidebar
           currentView={currentView}
           onNavigate={handleNavigate}
@@ -114,8 +114,8 @@ export function App() {
           onCloseMobile={() => setIsMobileSidebarOpen(false)}
         />
 
-        {/* Central / Main Content Area */}
-        <main className="flex-1 min-w-0 flex flex-col pr-4 py-1">
+        {/* 2 & 3. Main Workspace Area + Customization Setting Panel */}
+        <main className="flex-1 min-w-0 flex h-full overflow-hidden">
           {currentView === 'create' && (
             <CreateVideo
               project={project}
@@ -128,14 +128,16 @@ export function App() {
           )}
 
           {currentView === 'projects' && (
-            <MyProjects
-              onOpenProject={() => {
-                setCurrentView('create');
-              }}
-              onNewProject={() => {
-                setCurrentView('create');
-              }}
-            />
+            <div className="flex-1 overflow-y-auto">
+              <MyProjects
+                onOpenProject={() => {
+                  setCurrentView('create');
+                }}
+                onNewProject={() => {
+                  setCurrentView('create');
+                }}
+              />
+            </div>
           )}
         </main>
       </div>
