@@ -1,15 +1,14 @@
-import React from 'react';
-
-// Studio Logo Component matching the reference: round teal/green compass/paper-plane badge
+// Studio Logo Component using the provided navisafe.png
 export const StudioLogo = ({ size = 38, className = '' }) => (
   <div 
-    className={`relative flex items-center justify-center rounded-xl bg-gradient-to-br from-[#107050] to-[#0A4B35] shadow-sm overflow-hidden flex-shrink-0 ${className}`}
+    className={`relative flex items-center justify-center rounded-xl overflow-hidden flex-shrink-0 ${className}`}
     style={{ width: size, height: size }}
   >
-    <svg width={size * 0.65} height={size * 0.65} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22 2L11 13" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M22 2L15 22L11 13L2 9L22 2Z" fill="#34D399" fillOpacity="0.4" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img 
+      src="/navisafe.png" 
+      alt="Navisafe Training Studio Logo" 
+      className="w-full h-full object-contain"
+    />
   </div>
 );
 

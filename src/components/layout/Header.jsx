@@ -17,7 +17,7 @@ export const Header = ({
       <div className="flex items-center gap-3">
         <StudioLogo size={36} />
         <h1 className="text-[19px] font-bold tracking-tight text-[#0A2540]">
-          AI Training Studio
+          Navisafe Training Studio
         </h1>
       </div>
 

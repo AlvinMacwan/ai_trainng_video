@@ -90,7 +90,7 @@ export const Sidebar = ({
 
             <div className="space-y-1">
               <h4 className="text-xs font-bold text-white tracking-tight">
-                AI Training Studio
+                Navisafe Training Studio
               </h4>
               <p className="text-[11px] text-slate-300 leading-relaxed font-normal">
                 Turn your ideas into professional training videos.

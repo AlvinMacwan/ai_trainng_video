@@ -11,9 +11,8 @@ export const WorkflowSteps = ({ activeStep = 1, onStepClick }) => {
   ];
 
   return (
-    <div className="w-full pb-2">
-      {/* Stepper aligned to the left side directly above the Training Prompt with increased size */}
-      <div className="flex items-center max-w-xl relative">
+    <div className="w-full max-w-xl mx-auto">
+      <div className="flex items-center justify-between w-full relative">
         {steps.map((step, index) => {
           const isActive = step.number === activeStep;
           const isCompleted = step.number < activeStep;
@@ -21,7 +20,7 @@ export const WorkflowSteps = ({ activeStep = 1, onStepClick }) => {
 
           return (
             <React.Fragment key={step.number}>
-              {/* Step indicator node with increased dimensions */}
+              {/* Step indicator node */}
               <div 
                 onClick={() => onStepClick && onStepClick(step.number)}
                 className="flex flex-col items-center cursor-pointer group focus:outline-none z-10 select-none flex-shrink-0"
@@ -29,7 +28,7 @@ export const WorkflowSteps = ({ activeStep = 1, onStepClick }) => {
                 tabIndex={0}
                 aria-label={`Workflow step ${step.number}: ${step.label}`}
               >
-                {/* Circle - increased from w-7 to w-9.5 (38px) */}
+                {/* Circle - prominent 36px diameter */}
                 <div 
                   className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200 ${
                     isActive || isCompleted
@@ -40,7 +39,7 @@ export const WorkflowSteps = ({ activeStep = 1, onStepClick }) => {
                   {isCompleted ? <Check size={16} strokeWidth={3} /> : step.number}
                 </div>
 
-                {/* Label - increased font size and clarity */}
+                {/* Label */}
                 <span 
                   className={`text-xs mt-1.5 transition-colors tracking-tight ${
                     isActive 
@@ -54,9 +53,9 @@ export const WorkflowSteps = ({ activeStep = 1, onStepClick }) => {
                 </span>
               </div>
 
-              {/* Connecting line between steps */}
+              {/* Flexible connecting line between steps */}
               {!isLast && (
-                <div className="flex-1 min-w-[36px] max-w-[70px] mx-2 h-[3px] -mt-5 relative rounded-full overflow-hidden">
+                <div className="flex-1 min-w-[28px] max-w-[85px] mx-2 h-[3px] -mt-5 relative rounded-full overflow-hidden">
                   <div className="absolute inset-0 bg-[#E2E8F0]" />
                   {step.number === 1 && activeStep === 1 && (
                     <div className="absolute left-0 top-0 bottom-0 w-3 bg-[#138A63]" />
