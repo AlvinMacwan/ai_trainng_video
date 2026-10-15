@@ -70,7 +70,7 @@ export const TrainingPrompt = ({
           ) : (
             <>
               <Sparkles size={14} className="text-emerald-100" />
-              <span>✦ Generate Training</span>
+              <span>Generate Training</span>
             </>
           )}
         </button>
